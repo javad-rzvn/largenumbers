@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install and Build
+      - name: Install and Build svelte
         run: |
           npm install
           npm run build
