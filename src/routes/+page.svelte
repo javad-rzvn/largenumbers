@@ -10,8 +10,7 @@
   let suggestions;
   
 
-  const endpoint =
-    "/posts.json";
+  const endpoint = "/posts.json";
 
   let cities = [];
   // fetch(endpoint)
