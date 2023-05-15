@@ -18,7 +18,14 @@
 	"type": "module",
 	"dependencies": {
 		"@popperjs/core": "^2.11.7",
+		"@tinymce/tinymce-svelte": "^1.0.1",
 		"bootstrap": "^5.2.3",
-		"jquery": "^3.7.0"
+		"date-fns": "^2.30.0",
+		"date-fns-tz": "^2.0.0",
+		"jquery": "^3.7.0",
+		"persian-date": "^1.1.0",
+		"skeleton-elements": "^4.0.1",
+		"svelte-skeleton-loader": "^0.1.4",
+		"tinymce": "^6.4.2"
 	}
 }
