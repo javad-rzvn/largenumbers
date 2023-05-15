@@ -1,11 +1,12 @@
 <script>
   import { onMount } from "svelte";
+  import Page_header from "../Page_header.svelte";
 
   let input_count = 0;
   let searchInput;
   let suggestions;
-  
-  const endpoint = "./posts.json";
+
+  const endpoint = "https://waterdirectory.ir/wp-json/wp/v2/posts?categories=265";
 
   let cities = [];
 
@@ -20,7 +21,8 @@
       .filter((place) => {
         // here we need to figure out if the city or state matches what was searched
         const regex = new RegExp(wordToMatch, "gi");
-        return place.city.match(regex) || place.state.match(regex);
+        // return place.city.match(regex) || place.state.match(regex);
+        return place.title.rendered.match(regex);
       })
       .slice(0, 10);
   }
@@ -36,18 +38,18 @@
     const html = matchArray
       .map((place) => {
         const regex = new RegExp(this.value, "gi");
-        const cityName = place.city.replace(
+        const cityName = place.title.rendered.replace(
           regex,
           `<span class="hl">${this.value}</span>`
         );
-        const stateName = place.state.replace(
-          regex,
-          `<span class="hl">${this.value}</span>`
-        );
+        // const stateName = place.state.replace(
+        //   regex,
+        //   `<span class="hl">${this.value}</span>`
+        // );
         return `
       <li>
-        <span class="name">${cityName}, ${stateName}</span>
-        <span class="population">${numberWithCommas(place.population)}</span>
+        <span class="name">${cityName}</span>
+        <span class="population"></span>
       </li>
     `;
       })
@@ -59,21 +61,25 @@
   // searchInput.addEventListener('keyup', displayMatches);
 </script>
 
+<svelte:head>
+	<title>اعداد بزرگ | Large Numbers</title>
+  <meta name="description" content="اگر میخوای بدونی یک عدد بزرگ مفهومش چیه، میتونی در بین اعداد بزرگ جستجو کنی و بفهمی یعنی چقدر بزرگ هست">
+  <meta name="keywords" content="اعداد بزرگ, یعنی چقدر؟, large numbers">
+</svelte:head>
+
 <div
-  class="container d-flex flex-column justify-content-between g-0"
+  class="container-fluid d-flex flex-column justify-content-between"
   id="homepage"
 >
-  <div class="row px-3">
-    <ul id="top-menu">
-      <li><a href="#" class="active">صفحه اصلی</a></li>
-      <li><a href="#">ارسال مطلب</a></li>
-      <li><a href="#">صحبت با من</a></li>
-    </ul>
-  </div>
+  <Page_header />
 
   <div class="row">
-    <div class="col-5" />
     <div class="col-6">
+      <div class="homepage-raccoon">
+        <img src="/images/raccoon-10-homepage.png" />
+      </div>
+    </div>
+    <div class="col-6 d-flex justify-content-center align-items-center">
       <div class="input-group mb-3" id="search-form">
         <form class="search-form">
           <input
@@ -87,23 +93,26 @@
                     🔍
                 </button> -->
           {#if input_count < 1}
-            <ul class="suggestions" style="display:none" bind:this={suggestions}>
+            <ul
+              class="suggestions"
+              style="display:none"
+              bind:this={suggestions}
+            >
               <!-- <li>Filter for a city</li>
             <li>or a state</li> -->
             </ul>
-            {:else}
-            <ul class="suggestions" bind:this={suggestions}></ul>
+          {:else}
+            <ul class="suggestions" bind:this={suggestions} />
           {/if}
         </form>
       </div>
     </div>
-    <div class="col-1" />
   </div>
 
   <div class="row p-3">
     <div class="bg-copyright">
-      تصویر پس زمینه از: <a href="https://dribbble.com/AdrianaCaycedo"
-        >Balconies - Adriana Caycedo</a
+      تصویر پس زمینه از: <a href="https://freepik.com/"
+        >Freepik</a
       >
     </div>
   </div>
@@ -111,47 +120,31 @@
 
 <style>
   #homepage {
-    background-image: url("/images/homepage-bg2.png");
-    background-color: #c7e8f5;
+    /* background-image: url("/images/raccoon-10-homepage.png"); */
+    background-color: #e5a045;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center right;
-    margin: 25px auto;
-    min-height: 85vh;
-    border-radius: 15px;
+    margin: 0 auto;
+    min-height: 100vh;
   }
-  #top-menu {
-    padding: 10px;
-    margin: 0;
-    text-align: left;
-  }
-  #top-menu li {
-    list-style: none;
-    display: inline;
-    margin-left: 15px;
-  }
-  #top-menu li a {
-    text-decoration: none;
-    font-feature-settings: "ss01", "tnum";
-    font-family: Vazirmatn, tahoma;
-    font-size: 14px;
-    font-weight: 300;
-    color: #1d3568;
-  }
-  #top-menu li a:hover,
-  #top-menu li a.active {
-    font-weight: 500;
+  .homepage-raccoon img {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
   }
   .bg-copyright {
     text-align: left;
     font-family: Vazirmatn, tahoma;
     font-size: 12px;
     font-weight: 200;
-    color: #1d3568;
+    color: #562f08;
+    cursor: help;
   }
   .bg-copyright a {
     text-decoration: none;
-    color: #1d3568;
+    color: #562f08;
   }
   #search-form {
     font-family: Vazirmatn, tahoma;
@@ -160,8 +153,10 @@
     border-radius: 5px 0 0 5px;
   }
   #search-form input {
-    border-radius: 10px;
-    padding: 15px;
+    border-radius: 15px;
+    padding: 25px;
+    font-size: 22px;
+    border: 8px solid #d38229;
   }
   .search-form {
     width: 100%;
