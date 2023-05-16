@@ -12,7 +12,7 @@
   const fetchPost = (async () => {
     const id = $page.params.slug;
     const response = await fetch(
-      `https://waterdirectory.ir/wp-json/wp/v2/posts?slug=${id}`
+      `https://waterdirectory.ir/wp-json/wp/v2/posts?slug=${id}&_embed=wp:term`
     );
     return await response.json();
   })();
@@ -68,7 +68,7 @@
     {:then data}
       <Post_meta
         title={data[0].title.rendered}
-        category="آب"
+        category={data[0]["_embedded"]["wp:term"][0][0].name}
         date={post_date}
         reading_time={estimation}
       />
