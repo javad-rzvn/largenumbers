@@ -19,7 +19,7 @@
     <ul id="top-menu">
       <li><a href="/" aria-current={$page.url.pathname === '/'}>صفحه اصلی</a></li>
       <li><a href="#">ارسال مطلب</a></li>
-      <li><a href="/sitemap.xml">نقشه سایت</a></li>
+      <li><a href="/sitemap.txt">نقشه سایت</a></li>
     </ul>
   </div>
   <div class="col-3 top-border">
