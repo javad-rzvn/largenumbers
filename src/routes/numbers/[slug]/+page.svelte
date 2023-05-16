@@ -1,11 +1,6 @@
 <script>
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import { formatRelative, subDays } from "date-fns";
-  import { zonedTimeToUtc, utcToZonedTime, format, toDate } from "date-fns-tz";
-  import { enUS, faIR } from "date-fns/locale";
-  // import moment from 'moment';
-  import moment from 'moment-jalaali';
   import Page_header from "../../../Page_header.svelte";
   import Post_meta from "../../../Post_meta.svelte";
   import Post_meta_loading from "../../../Post_meta_loading.svelte";
@@ -25,17 +20,8 @@
   let post_date;
   // https://petehanner.medium.com/javascript-promises-and-fetch-33a5f5d13fe0
   const fetch_post_date = fetchPost.then((data) => {
-    // console.log(data[0].id);
     const post_date_raw = data[0].date;
-    // var post_date_raw_adj = utcToZonedTime(post_date_raw, 'Asia/Tehran')
-    // const dd1 = utcToZonedTime(toDate(post_date_raw), "Asia/Tehran");
-    // post_date = format(dd1, "yyyy-MM-dd'T'HH:mm:ss", {
-    //   timeZone: "Asia/Tehran",
-    // });
     const date = new Date(post_date_raw);
-    // const timeZone = "Asia/Tehran";
-    // const zonedDate = utcToZonedTime(date, timeZone);
-    // post_date = format(zonedDate, "MM/dd/yyyy", { locale: faIR });
     post_date = new Intl.DateTimeFormat('fa-IR').format(date)
   });
 
