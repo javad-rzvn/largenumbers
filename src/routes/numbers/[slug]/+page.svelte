@@ -4,11 +4,11 @@
   import { formatRelative, subDays } from "date-fns";
   import { zonedTimeToUtc, utcToZonedTime, format, toDate } from "date-fns-tz";
   import { enUS, faIR } from "date-fns/locale";
+  // import moment from 'moment';
+  import moment from 'moment-jalaali';
   import Page_header from "../../../Page_header.svelte";
   import Post_meta from "../../../Post_meta.svelte";
   import Post_meta_loading from "../../../Post_meta_loading.svelte";
-
-  var persian_date = require('persian-date');
 
   let estimation;
   let post_name;
@@ -22,23 +22,21 @@
     return await response.json();
   })();
 
-  let post_date_raw;
   let post_date;
-  let post_date1;
   // https://petehanner.medium.com/javascript-promises-and-fetch-33a5f5d13fe0
   const fetch_post_date = fetchPost.then((data) => {
     // console.log(data[0].id);
-    post_date_raw = data[0].date;
+    const post_date_raw = data[0].date;
     // var post_date_raw_adj = utcToZonedTime(post_date_raw, 'Asia/Tehran')
     // const dd1 = utcToZonedTime(toDate(post_date_raw), "Asia/Tehran");
     // post_date = format(dd1, "yyyy-MM-dd'T'HH:mm:ss", {
     //   timeZone: "Asia/Tehran",
     // });
-    const date = new Date(post_date_raw)
-    const timeZone = 'Asia/Tehran'
-    const zonedDate = utcToZonedTime(date, timeZone)
-    post_date1 = format(zonedDate, "MMMM/dd/yyyy", {locale: faIR})
-    console.log(post_date1);
+    const date = new Date(post_date_raw);
+    // const timeZone = "Asia/Tehran";
+    // const zonedDate = utcToZonedTime(date, timeZone);
+    // post_date = format(zonedDate, "MM/dd/yyyy", { locale: faIR });
+    post_date = new Intl.DateTimeFormat('fa-IR').format(date)
   });
 
   onMount(() => {
@@ -58,8 +56,6 @@
   });
 </script>
 
-<script src="node_modules/persian-date/dist/persian-date.js" type="text/javascript"></script>
-
 <svelte:head>
   {#await fetchPost}
     <title>اعداد بزرگ | Large numbers</title>
@@ -75,7 +71,6 @@
   class="container-fluid d-flex flex-column justify-content-between"
   id="single-post"
 >
-  {post_date}
 
   <Page_header />
 
@@ -88,7 +83,7 @@
       <Post_meta
         title={data[0].title.rendered}
         category="آب"
-        date={data[0].date}
+        date={post_date}
         reading_time={estimation}
       />
     {:catch error}
