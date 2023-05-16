@@ -6,7 +6,11 @@
         "longitude": -74.0059413, 
         "population": "8405837", 
         "rank": "1", 
-        "state": "New York"
+        "state": "New York",
+        "body": {
+            "summary": "",
+            "content": "\n    <div class=\"alert alert-warning\" role=\"alert\">\n          A simple warning alert—check it out!\n        </div>\n"
+        }
     }, 
     {
         "city": "Los Angeles", 
