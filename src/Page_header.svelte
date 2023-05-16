@@ -18,8 +18,8 @@
   <div class="col-6 side-border">
     <ul id="top-menu">
       <li><a href="/" aria-current={$page.url.pathname === '/'}>صفحه اصلی</a></li>
-      <li><a href="/pages/generate-post" aria-current={$page.url.pathname === '/pages/generate-post'}>ارسال مطلب</a></li>
-      <li><a href="/posts/how-large-is-one-million-m3">صحبت با من</a></li>
+      <li><a href="#">ارسال مطلب</a></li>
+      <li><a href="#">صحبت با من</a></li>
     </ul>
   </div>
   <div class="col-3 top-border">

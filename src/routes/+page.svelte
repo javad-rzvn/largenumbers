@@ -38,6 +38,7 @@
     const html = matchArray
       .map((place) => {
         const regex = new RegExp(this.value, "gi");
+        const number_URL = place.slug;
         const cityName = place.title.rendered.replace(
           regex,
           `<span class="hl">${this.value}</span>`
@@ -48,8 +49,10 @@
         // );
         return `
       <li>
+        <a href="/numbers/${number_URL}">
         <span class="name">${cityName}</span>
         <span class="population"></span>
+        </a>
       </li>
     `;
       })
@@ -160,5 +163,22 @@
   }
   .search-form {
     width: 100%;
+  }
+  .suggestions {
+    margin: 0 auto;
+    padding: 0;
+  }
+  :global(.suggestions li) {
+    display: block;
+    list-style: none;
+  }
+  :global(.suggestions li a) {
+    display: block;
+    background-color: #562f08;
+    color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    margin-top: 10px;
   }
 </style>
