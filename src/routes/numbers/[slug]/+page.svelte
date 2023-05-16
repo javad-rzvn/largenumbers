@@ -3,7 +3,9 @@
   import { onMount } from "svelte";
   import Page_header from "../../../Page_header.svelte";
   import Post_meta from "../../../Post_meta.svelte";
+  import Post_content from "../../../Post_content.svelte";
   import Post_meta_loading from "../../../Post_meta_loading.svelte";
+  import Post_content_loading from "../../../Post_content_loading.svelte";
 
   let estimation;
   let post_name;
@@ -22,7 +24,7 @@
   const fetch_post_date = fetchPost.then((data) => {
     const post_date_raw = data[0].date;
     const date = new Date(post_date_raw);
-    post_date = new Intl.DateTimeFormat('fa-IR').format(date)
+    post_date = new Intl.DateTimeFormat("fa-IR").format(date);
   });
 
   onMount(() => {
@@ -57,7 +59,6 @@
   class="container-fluid d-flex flex-column justify-content-between"
   id="single-post"
 >
-
   <Page_header />
 
   <div
@@ -80,7 +81,17 @@
   </div>
 </div>
 
-<div class="post-content" />
+<div class="post-content">
+  {#await fetchPost}
+      <Post_content_loading />
+    {:then data}
+      <Post_content
+        body={data[0].content.rendered}
+      />
+    {:catch error}
+      <p>An error occurred!</p>
+    {/await}
+</div>
 
 <style>
   :global(body) {
